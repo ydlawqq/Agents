@@ -10,7 +10,6 @@ import glob
 from langchain_mistralai.chat_models import SecretStr
 from langchain_mistralai.embeddings import MistralAIEmbeddings
 
-api = 'WdIZEvLAwsmM3cefzH2Q6wAPTCI9a0xF'
 docs = []
 for path in glob.glob('/home/ydlawq/Загрузки/OOP_lektsii-1.pdf'):
     loader = PyPDFLoader(path)
