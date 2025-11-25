@@ -3,7 +3,10 @@ from langchain_mistralai import ChatMistralAI
 from pydantic import BaseModel, Field
 from langchain_core.tools import StructuredTool
 import requests
+from classes import TokenPriceInput, State
 from ForAPi import api_sec, api_id, api_secret
+from langchain_community.document_loaders import WebBaseLoader
+import bs4
 from langchain_core.tools import tool
 
 MEMCACHED_HOST = '127.0.0.1:11211'
@@ -14,8 +17,7 @@ llm = ChatMistralAI(
 key = api_id
 BASE_URL = "https://api.unisender.com/ru/api/sendEmail"
 
-class TokenPriceInput(BaseModel):
-    token_name: str = Field(description="Тикер токена, например BTC, ETH, NOT")
+
 
 
 def get_price_of_token(token_name: str):
@@ -29,3 +31,11 @@ get_price_tool = StructuredTool.from_function(
     args_schema=TokenPriceInput
 )
 
+
+def next_node(state: State):
+    if state['next'] == 'price':
+        return 'price'
+    return 'END'
+
+def get_info_from_banks_and_web3pools():
+    pass
